@@ -1,9 +1,8 @@
 <% layout('layouts/boilerplate') %>
 <div class="row mt-3">
   <div class="col-8 offset-2">
-   
     <h3>Edit Listing</h3>
-    <form action="/listings/<%= listing._id %>?_method=PUT" method="POST">
+    <form action="/listings/<%= listing._id %>?_method=PUT" method="POST" novalidate class="needs-validation">
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
 
@@ -14,12 +13,16 @@
           required
           class="form-control"
         />
+        <div class ="valid-feedback"> Title Looks good!</div>
+        <div class ="invalid-feedback"> Please enter a valid title. </div>
       </div>
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
         <textarea name="listing[description]" required class="form-control">
 <%= listing.description %></textarea
         >
+        <div class ="valid-feedback"> Description Looks good!</div>
+        <div class ="invalid-feedback"> Please enter a valid description. </div>
       </div>
       <div class="mb-3">
         <label for="image" class="form-label">Image URL</label>
@@ -30,6 +33,8 @@
           required
           class="form-control"
         />
+        <div class ="valid-feedback"> Image URL Looks good!</div>
+        <div class ="invalid-feedback"> Please enter a valid image URL. </div>
       </div>
       <div class="row">
         <div class="mb-3 col-md-4">
@@ -41,6 +46,8 @@
             required
             class="form-control"
           />
+          <div class ="valid-feedback"> Price Looks good!</div>
+          <div class ="invalid-feedback"> Please enter a valid price. </div>
         </div>
         <div class="mb-3 col-md-8">
           <label for="country" class="form-label">Country</label>
@@ -50,6 +57,8 @@
             required
             class="form-control"
           />
+          <div class ="valid-feedback"> Country Looks good!</div>
+          <div class ="invalid-feedback"> Please enter a valid country. </div>
         </div>
       </div>
       <div class="mb-3">
@@ -60,11 +69,13 @@
           required
           class="form-control"
         />
-
-        
+        <div class ="valid-feedback"> Location Looks good!</div>
+        <div class ="invalid-feedback"> Please enter a valid location. </div>
       </div>
-      <button type="submit" class="btn btn-dark edit-btn mt-3">Update Listing</button
+      <button type="submit" class="btn btn-dark edit-btn mt-3">
+        Update Listing</button
       ><br /><br />
+      <a href="/listings/<%= listing._id %>" class="btn btn-secondary">Cancel</a>
     </form>
   </div>
 </div>
