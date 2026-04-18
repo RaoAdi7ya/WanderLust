@@ -1,10 +1,10 @@
 <% layout('layouts/boilerplate') %>
 <div class="row mt-3">
   <div class="col-8 offset-2">
-    <br /><br>
+    <br /><br />
     <h3>Create New Listing</h3>
 
-    <form action="/listings" method="POST"  novalidate class="needs-validation">
+    <form action="/listings" method="POST" novalidate class="needs-validation">
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input
@@ -14,8 +14,10 @@
           required
           class="form-control"
         /><br /><br />
-        <div class ="valid-feedback"> Title Looks good!</div>
-        <div class ="invalid-feedback"> Please enter a title for the listing. </div>
+        <div class="valid-feedback">Title Looks good!</div>
+        <div class="invalid-feedback">
+          Please enter a title for the listing.
+        </div>
       </div>
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
@@ -27,8 +29,10 @@
         ></textarea
         ><br />
         <br />
-        <div class ="valid-feedback"> Description Looks good!</div>
-        <div class ="invalid-feedback"> Please enter a description for the listing. </div>
+        <div class="valid-feedback">Description Looks good!</div>
+        <div class="invalid-feedback">
+          Please enter a description for the listing.
+        </div>
       </div>
       <div class="mb-3">
         <label for="image" class="form-label">Image URL</label>
@@ -39,11 +43,11 @@
           required
           class="form-control"
         /><br /><br />
-        <div class ="valid-feedback"> Image URL Looks good!</div>
-        <div class ="invalid-feedback"> Please enter a valid image URL. </div>
+        <div class="valid-feedback">Image URL Looks good!</div>
+        <div class="invalid-feedback">Please enter a valid image URL.</div>
       </div>
       <div class="row">
-        <div class ="mb-3 col-4">
+        <div class="mb-3 col-4">
           <label for="price" class="form-label">Price</label>
           <input
             type="number"
@@ -52,8 +56,8 @@
             required
             class="form-control"
           /><br /><br />
-            <div class ="valid-feedback"> Price Looks good!</div>
-          <div class ="invalid-feedback"> Please enter a valid price.</div>
+          <div class="valid-feedback">Price Looks good!</div>
+          <div class="invalid-feedback">Please enter a valid price.</div>
         </div>
         <div class="mb-3 col-md-8">
           <label for="country" class="form-label">Country</label>
@@ -64,8 +68,8 @@
             required
             class="form-control"
           /><br /><br />
-          <div class ="valid-feedback"> Country Looks good!</div>
-          <div class ="invalid-feedback"> Please enter a valid country. </div>
+          <div class="valid-feedback">Country Looks good!</div>
+          <div class="invalid-feedback">Please enter a valid country.</div>
         </div>
       </div>
       <div class="mb-3">
@@ -77,11 +81,13 @@
           required
           class="form-control"
         /><br /><br />
-        <div class ="valid-feedback"> Location Looks good!</div>
-        <div class ="invalid-feedback"> Please enter a valid location. </div>
+        <div class="valid-feedback">Location Looks good!</div>
+        <div class="invalid-feedback">Please enter a valid location.</div>
       </div>
-      <button  type="submit" class="btn btn-dark  add-btn mt-3">Create Listing</button>
-      <br>
+      <button type="submit" class="btn btn-dark add-btn mt-3">
+        Create Listing
+      </button>
+      <br />
     </form>
   </div>
 </div>
