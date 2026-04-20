@@ -3,23 +3,20 @@ const app = express();
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const cookieParser = require("cookie-parser");
+const session = require("express-session");
 
-app.use(express.json());
+// Middleware
+app.use(session({
+  secret: "your_secret_key",
+  resave: false,
+  saveUninitialized: true,
+}));
 app.use(cookieParser());
+app.use(express.json());  
 
-
-app.get("/getcookies", (req, res) => {
-  res.cookie("username", "wanderlust_user");
-  res.send("Cookie has been set!");
+app.get("/test", (req, res) => {
+  res.send("Welcome to the Classroom API");
 });
-
-app.get("/", (req, res) => {
-  console.dir(req.cookies);
-  res.send("Welcome to the WonderLust API!");
-});
-
-app.use("/users", userRoutes);
-app.use("/posts", postRoutes);
 
 
 app.listen(3000, () => {
