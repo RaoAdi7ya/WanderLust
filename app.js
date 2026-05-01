@@ -5,13 +5,15 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
-const  session = require("express-session");
+const session = require("express-session");
 const flash = require("connect-flash");
-
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
 
 const listings = require("./routes/listings");
 const reviews = require("./routes/review");
-
+const users = require("./routes/user");
 
 main()
   .then(() => {
@@ -41,7 +43,7 @@ const sessionConfig = {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     httpOnly: true,
-  }
+  },
 };
 
 app.get("/", (req, res) => {
@@ -50,6 +52,13 @@ app.get("/", (req, res) => {
 
 app.use(session(sessionConfig));
 app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
@@ -60,11 +69,9 @@ app.use((req, res, next) => {
 
 
 
-
-app.use("/listings",listings);
-
+app.use("/listings", listings);
 app.use("/listings/:id/reviews", reviews);
-
+app.use("/", users);
 
 app.use((req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
