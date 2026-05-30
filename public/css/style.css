@@ -1,25 +1,25 @@
-body{
-   
+body {
   font-family: "Plus Jakarta Sans", sans-serif !important;
-  display:flex;
+  display: flex;
   flex-direction: column;
   min-height: 100vh;
- 
-}
-.container{
-    flex:1;
 }
 
+.container {
+  flex: 1;
+}
 
 .navbar {
   height: 5rem;
   background-color: white;
   padding: 10px 20px;
 }
+
 .fa-compass {
   color: #fe424d;
   font-size: 2rem;
 }
+
 .nav-link {
   color: #222222 !important;
 }
@@ -28,23 +28,27 @@ body{
   text-decoration: none;
   color: #222222;
 }
+
 .f-info-links a:hover {
   text-decoration: underline;
 }
-.f-info-links,.f-info-socials ,.f-info-brand  {
+
+.f-info-links,
+.f-info-socials,
+.f-info-brand {
   width: 100%;
-    display: flex;
-    align-items: center;
-      justify-content: center;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.f-info-socials i{
-    margin-right:1.2rem;
-    font-size: 1.2rem;
+.f-info-socials i {
+  margin-right: 1.2rem;
+  font-size: 1.2rem;
 }
+
 .f-info {
-    text-align: center;
+  text-align: center;
   height: 8rem;
   display: flex;
   background-color: #ebebeb;
@@ -52,51 +56,122 @@ body{
   justify-content: center;
   align-items: space-evenly;
 }
-.listing-card{
-    border : none !important;
-    margin-bottom: 2rem;
-}
-.card-img-top{
-    border-radius: 1rem !important;
-    width : 100% !important;
-    object-fit: cover !important;
 
+.listing-card {
+  border: none !important;
+  margin-bottom: 2rem;
 }
+
+.card-img-top {
+  border-radius: 1rem !important;
+  width: 100% !important;
+  object-fit: cover !important;
+}
+
 .listing-link {
   text-decoration: none;
   color: inherit;
 }
 
-.card-body{
-    padding: 0 !important;
-}
-.card-text p{
-    font-weight: 400 !important;
-
-}
-.card-img-overlay{
-    opacity: 0;
-}
-.card-img-overlay:hover{
-    opacity: 0.2;
-    background-color: white !important;
+.card-body {
+  padding: 0 !important;
 }
 
-.add-btn{
+.card-text p {
+  font-weight: 400 !important;
+}
+
+.card-img-overlay {
+  opacity: 0;
+}
+
+.card-img-overlay:hover {
+  opacity: 0.2;
+  background-color: white !important;
+}
+
+.add-btn {
   background-color: #fe424d !important;
-    border:none
+  border: none;
 }
-.edit-btn{
+
+.edit-btn {
   background-color: #fe424d !important;
-    border:none
+  border: none;
 }
-.show-img{
-   height:30vh;
+
+.show-img {
+  height: 30vh;
 }
-.btns{
-  display:flex;
+
+.btns {
+  display: flex;
 }
-.show-card{
-  padding-left:0;
+
+.show-card {
+  padding-left: 0;
   padding-right: 0;
 }
+
+/* ==================== MAP STYLING ==================== */
+
+/* ==================== MAP STYLING ==================== */
+
+/* Map Container */
+#map {
+  width: 100%;
+  height: 400px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+/* Map Popup Styling */
+.maplibregl-popup {
+  max-width: 250px;
+}
+
+.maplibregl-popup-content {
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.maplibregl-popup-content h5 {
+  margin: 0 0 8px 0;
+  font-weight: 600;
+  color: #333;
+}
+
+.maplibregl-popup-content p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Map Controls */
+.maplibregl-ctrl-group button {
+  width: 29px;
+  height: 29px;
+}
+
+/* Marker Styling */
+.maplibregl-marker {
+  cursor: pointer;
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+  #map {
+    height: 300px;
+  }
+  
+  .maplibregl-popup {
+    max-width: 200px;
+  }
+  
+  .maplibregl-popup-content {
+    padding: 10px;
+    font-size: 13px;
+  }
+}
+

@@ -1,6 +1,7 @@
 const Listing = require("../models/listing");
 const wrapAsync = require("../utils/wrapAsync");
 const { isLoggedIn, isOwner, validateListing} = require("../middleware");
+const forwardGeocode = require("../utils/forwardGeoCode");
 
 //index route
 
@@ -23,19 +24,30 @@ module.exports.renderNewForm = (req, res) => {
        return res.redirect("/listings");
      } 
      console.log("Listing owner:", listing.owner);
-     res.render("listings/show.ejs", { listing,  });
+     res.render("listings/show.ejs", { listing });
    };
 //create route
 module.exports.createListing = async (req, res, next) => {
-    let url =  req.file.path;
+  try {
+    // Get coordinates from location
+    const { latitude, longitude } = await forwardGeocode(
+      req.body.listing.location,
+    );
+
+    let url = req.file.path;
     let filename = req.file.filename;
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
     newListing.image = { url, filename };
+    newListing.latitude = latitude; 
+    newListing.longitude = longitude; 
     await newListing.save();
     req.flash("success", "Successfully created a new listing!");
     res.redirect("/listings");
-  };
+  } catch (err) {
+    next(err);
+  }
+};
  //edit route
 module.exports.renderEditForm = async (req, res) => {
     const { id } = req.params;

@@ -14,7 +14,6 @@ const listingSchema = new mongoose.Schema({
   image: {
     url: String,
     filename: String,
-    
   },
   price: {
     type: Number,
@@ -27,6 +26,14 @@ const listingSchema = new mongoose.Schema({
   country: {
     type: String,
     required: true,
+  },
+  latitude: {
+    type: Number,
+    default: 28.5355, // Default Delhi
+  },
+  longitude: {
+    type: Number,
+    default: 77.391,// Default Delhi
   },
   reviews: [
     {
@@ -45,10 +52,8 @@ listingSchema.post("findOneAndDelete", async (listing) => {
     await Review.deleteMany({ _id: { $in: listing.reviews } });
   } else {
     console.log("No document found to delete.");
-  }});
-
-
-
+  }
+});
 
 const Listing = mongoose.model("Listing", listingSchema);
 
