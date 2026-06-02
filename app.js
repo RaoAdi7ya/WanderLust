@@ -69,7 +69,9 @@ const sessionConfig = {
 };
 
 
-
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
 
 app.use(session(sessionConfig));
 app.use(flash());
