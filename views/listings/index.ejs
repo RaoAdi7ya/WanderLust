@@ -73,12 +73,12 @@
 
         <div class="card col listing-card">
 
-          <img 
-            src="<%= listing.image.url %>" 
-            class="card-img-top" 
-            alt="listing_image"
-            style="height: 20rem;"
-          >
+         <div class="card-img-wrapper">
+  <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem; object-fit: cover;">
+  <button class="heart-btn">
+    <i class="fa-regular fa-heart" style="color: #fe424d;"></i>
+  </button>
+</div>
 
           <div class="card-img-overlay">
             
@@ -106,7 +106,7 @@
   let taxSwitch = document.getElementById('flexSwitchCheckDefault');
   taxSwitch.addEventListener('click', () => {
   let taxInfo = document.getElementsByClassName('tax-info');
-  for(info of taxInfo) {
+  for(let info of taxInfo) {
     if(taxSwitch.checked) {
       info.style.display = 'inline';
     } else {

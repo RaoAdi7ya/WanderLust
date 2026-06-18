@@ -6,7 +6,19 @@ const forwardGeocode = require("../utils/forwardGeoCode");
 //index route
 
 module.exports.index = async (req, res) => {
-  const allListings = await Listing.find({});
+  const { location } = req.query;
+  let allListings;
+  if (location && location.trim() !== "") {
+    allListings = await Listing.find({
+      $or: [
+        { location: { $regex: location, $options: "i" } },
+        { country: { $regex: location, $options: "i" } },
+        { title: { $regex: location, $options: "i" } },
+      ],
+    });
+  } else {
+    allListings = await Listing.find({});
+  }
   res.render("listings/index.ejs", { allListings });
 };
 //new route
@@ -23,24 +35,23 @@ module.exports.renderNewForm = (req, res) => {
        req.flash("error", "Cannot find that listing!");
        return res.redirect("/listings");
      } 
-     console.log("Listing owner:", listing.owner);
      res.render("listings/show.ejs", { listing });
    };
 //create route
 module.exports.createListing = async (req, res, next) => {
   try {
-    // Get coordinates from location
+    if (!req.file) {
+      req.flash("error", "Please upload an image.");
+      return res.redirect("/listings/new");
+    }
     const { latitude, longitude } = await forwardGeocode(
       req.body.listing.location,
     );
-
-    let url = req.file.path;
-    let filename = req.file.filename;
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
-    newListing.image = { url, filename };
-    newListing.latitude = latitude; 
-    newListing.longitude = longitude; 
+    newListing.image = { url: req.file.path, filename: req.file.filename };
+    newListing.latitude = latitude;
+    newListing.longitude = longitude;
     await newListing.save();
     req.flash("success", "Successfully created a new listing!");
     res.redirect("/listings");
@@ -62,19 +73,32 @@ module.exports.renderEditForm = async (req, res) => {
     res.render("listings/edit.ejs", { listing, originalImageUrl });
   };
   //update route
-module.exports.updateListing = async (req, res) => {
+module.exports.updateListing = async (req, res, next) => {
+  try {
     const { id } = req.params;
-    let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-    if( typeof req.file !== "undefined" && req.file.path !== listing.image.url) {
-    let url = req.file.path;
-    let filename = req.file.filename;
-    listing.image = { url, filename };
-    await listing.save();
+    let listing = await Listing.findByIdAndUpdate(
+      id,
+      { ...req.body.listing },
+      { new: true },
+    );
+
+    const { latitude, longitude } = await forwardGeocode(
+      req.body.listing.location,
+    );
+    listing.latitude = latitude;
+    listing.longitude = longitude;
+
+    if (req.file) {
+      listing.image = { url: req.file.path, filename: req.file.filename };
     }
 
+    await listing.save();
     req.flash("success", "Successfully updated the listing!");
     res.redirect(`/listings/${id}`);
-  };
+  } catch (err) {
+    next(err);
+  }
+};
   //delete route
 module.exports.deleteListing = async (req, res) => {
     const { id } = req.params;

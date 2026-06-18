@@ -1,93 +1,259 @@
 <% layout('layouts/boilerplate') %>
-<div class="row mt-3">
-  <div class="col-8 offset-2">
-    <br /><br />
-    <h3>Create New Listing</h3>
 
-    <form action="/listings" method="POST" novalidate class="needs-validation"  encType="multipart/form-data">
-      <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input
-          type="text"
-          name="listing[title]"
-          placeholder="Enter Title"
-          required
-          class="form-control"
-        /><br /><br />
-        <div class="valid-feedback">Title Looks good!</div>
-        <div class="invalid-feedback">
-          Please enter a title for the listing.
-        </div>
+<div class="container-fluid px-3 px-md-5 mt-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-7">
+
+      <h3 class="fw-bold mb-1">Create New Listing</h3>
+      <p class="text-muted mb-4">Tell guests about your place — you can edit any of this later.</p>
+
+      <div class="p-3 p-md-4 rounded-4 shadow-sm" style="background:#fff; border:1px solid #eee;">
+        <form
+          action="/listings"
+          method="POST"
+          novalidate
+          class="needs-validation"
+          enctype="multipart/form-data"
+        >
+
+          <p class="section-eyebrow">The basics</p>
+
+          <div class="mb-3">
+            <label for="title" class="form-label fw-semibold">Title</label>
+            <input
+              type="text"
+              id="title"
+              name="listing[title]"
+              placeholder="Enter title"
+              required
+              class="form-control rounded-3"
+            />
+            <div class="valid-feedback">Title looks good!</div>
+            <div class="invalid-feedback">Please enter a title for the listing.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label fw-semibold">Description</label>
+            <textarea
+              id="description"
+              name="listing[description]"
+              placeholder="Enter description"
+              required
+              rows="4"
+              class="form-control rounded-3"
+            ></textarea>
+            <div class="valid-feedback">Description looks good!</div>
+            <div class="invalid-feedback">Please enter a description for the listing.</div>
+          </div>
+
+          <hr class="my-4">
+
+          <p class="section-eyebrow">Photo</p>
+
+          <div class="mb-4">
+            <div id="dropzone" class="dropzone">
+              <div id="dropzoneEmpty" class="dropzone-empty">
+                <i class="fa-solid fa-cloud-arrow-up fa-2x mb-2"></i>
+                <p class="mb-1 fw-semibold">Click to upload or drag a photo here</p>
+                <p class="text-muted small mb-0">PNG or JPG works best</p>
+              </div>
+              <div id="dropzonePreviewWrap" class="dropzone-preview d-none">
+                <img id="dropzonePreview" alt="Selected image preview" />
+                <span class="change-photo-btn">
+                  <i class="fa-solid fa-pen me-1"></i> Change photo
+                </span>
+              </div>
+              <input
+                type="file"
+                id="image"
+                name="listing[image]"
+                accept="image/*"
+                required
+                class="dropzone-input form-control"
+              />
+            </div>
+            <div class="invalid-feedback d-block mt-1" id="imageError" style="display:none;">
+              Please upload a valid image.
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <p class="section-eyebrow">Pricing &amp; location</p>
+
+          <div class="row">
+            <div class="col-12 col-md-4 mb-3">
+              <label for="price" class="form-label fw-semibold">Price</label>
+              <div class="input-group">
+                <span class="input-group-text">&#8377;</span>
+                <input
+                  type="number"
+                  id="price"
+                  name="listing[price]"
+                  placeholder="0"
+                  required
+                  min="0"
+                  class="form-control rounded-3"
+                />
+              </div>
+              <div class="valid-feedback">Price looks good!</div>
+              <div class="invalid-feedback">Please enter a valid price.</div>
+            </div>
+
+            <div class="col-12 col-md-8 mb-3">
+              <label for="country" class="form-label fw-semibold">Country</label>
+              <input
+                type="text"
+                id="country"
+                name="listing[country]"
+                placeholder="Enter country"
+                required
+                class="form-control rounded-3"
+              />
+              <div class="valid-feedback">Country looks good!</div>
+              <div class="invalid-feedback">Please enter a valid country.</div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="location" class="form-label fw-semibold">Location</label>
+            <input
+              type="text"
+              id="location"
+              name="listing[location]"
+              placeholder="Enter location"
+              required
+              class="form-control rounded-3"
+            />
+            <div class="valid-feedback">Location looks good!</div>
+            <div class="invalid-feedback">Please enter a valid location.</div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn rounded-3 px-4"
+            style="background-color:#fe424d; color:#fff;"
+          >
+            <i class="fa-solid fa-plus me-1"></i> Create Listing
+          </button>
+        </form>
       </div>
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea
-          name="listing[description]"
-          placeholder="Enter Description"
-          required
-          class="form-control"
-        ></textarea
-        ><br />
-        <br />
-        <div class="valid-feedback">Description Looks good!</div>
-        <div class="invalid-feedback">
-          Please enter a description for the listing.
-        </div>
-      </div>
-     
-      <div class="mb-3">
-        <label for="image" class="form-label">Image</label>
-        <input
-          type="file"
-          name="listing[image]"
-          required
-          class="form-control"
-        /> <br /><br />
-        <div class="valid-feedback">Image Looks good!</div>
-        <div class="invalid-feedback">Please upload a valid image.</div>
-      </div>
-      <div class="row">
-        <div class="mb-3 col-4">
-          <label for="price" class="form-label">Price</label>
-          <input
-            type="number"
-            name="listing[price]"
-            placeholder="Enter Price"
-            required
-            class="form-control"
-          /><br /><br />
-          <div class="valid-feedback">Price Looks good!</div>
-          <div class="invalid-feedback">Please enter a valid price.</div>
-        </div>
-        <div class="mb-3 col-md-8">
-          <label for="country" class="form-label">Country</label>
-          <input
-            type="text"
-            name="listing[country]"
-            placeholder="Enter Country"
-            required
-            class="form-control"
-          /><br /><br />
-          <div class="valid-feedback">Country Looks good!</div>
-          <div class="invalid-feedback">Please enter a valid country.</div>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="location" class="form-label">Location</label>
-        <input
-          type="text"
-          name="listing[location]"
-          placeholder="Enter Location"
-          required
-          class="form-control"
-        /><br /><br />
-        <div class="valid-feedback">Location Looks good!</div>
-        <div class="invalid-feedback">Please enter a valid location.</div>
-      </div>
-      <button type="submit" class="btn btn-dark add-btn mt-3">
-        Create Listing
-      </button>
-      <br />
-    </form>
+
+    </div>
   </div>
 </div>
+
+<style>
+  .section-eyebrow {
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #999;
+    margin-bottom: 1rem;
+  }
+
+  .dropzone {
+    position: relative;
+    border: 2px dashed #ddd;
+    border-radius: 1rem;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    overflow: hidden;
+    background: #fafafa;
+    padding: 1rem;
+  }
+  .dropzone.dragover {
+    border-color: #fe424d;
+    background: #fff5f5;
+  }
+  .dropzone-empty i { color: #fe424d; }
+
+  .dropzone-input.form-control {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+  }
+
+  .dropzone-preview {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+  .dropzone-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .change-photo-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    z-index: 2;
+  }
+</style>
+
+<script>
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('image');
+  const emptyState = document.getElementById('dropzoneEmpty');
+  const previewWrap = document.getElementById('dropzonePreviewWrap');
+  const previewImg = document.getElementById('dropzonePreview');
+
+  function showPreview(file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      previewImg.src = e.target.result;
+      emptyState.classList.add('d-none');
+      previewWrap.classList.remove('d-none');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  fileInput.addEventListener('change', function () {
+    const file = this.files && this.files[0];
+    if (file) showPreview(file);
+  });
+
+  ['dragenter', 'dragover'].forEach(function (evt) {
+    dropzone.addEventListener(evt, function (e) {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+  });
+
+  ['dragleave', 'drop'].forEach(function (evt) {
+    dropzone.addEventListener(evt, function (e) {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+    });
+  });
+
+  dropzone.addEventListener('drop', function (e) {
+    const file = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (file) {
+      fileInput.files = e.dataTransfer.files;
+      showPreview(file);
+    }
+  });
+</script>

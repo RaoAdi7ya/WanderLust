@@ -1,85 +1,156 @@
 <% layout('layouts/boilerplate') %>
-<div class="row mt-3">
-  <div class="col-8 offset-2">
-    <h3>Edit Listing</h3>
-    <form action="/listings/<%= listing._id %>?_method=PUT" method="POST" novalidate class="needs-validation" encType="multipart/form-data">
-      <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
 
-        <input
-          type="text"
-          name="listing[title]"
-          value="<%= listing.title %>"
-          required
-          class="form-control"
-        />
-        <div class ="valid-feedback"> Title Looks good!</div>
-        <div class ="invalid-feedback"> Please enter a valid title. </div>
-      </div>
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea name="listing[description]" required class="form-control">
-<%= listing.description %></textarea
+<div class="container-fluid px-3 px-md-5 mt-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-7">
+
+      <h3 class="fw-bold mb-4">Edit Listing</h3>
+
+      <div class="p-3 p-md-4 rounded-4 shadow-sm" style="background:#fff; border:1px solid #eee;">
+        <form
+          action="/listings/<%= listing._id %>?_method=PUT"
+          method="POST"
+          novalidate
+          class="needs-validation"
+          enctype="multipart/form-data"
         >
-        <div class ="valid-feedback"> Description Looks good!</div>
-        <div class ="invalid-feedback"> Please enter a valid description. </div>
-      </div>
-      <div class=""mb-3>
-        Original Image:<br />
-        <img src="<%= originalImageUrl %>" alt="Current Image" class="img-thumbnail" style="max-width: 200px;" />
-      </div>
-      
-      <div class="mb-3">
-        <label for="image" class="form-label">Image</label>
-        <input
-          type="file"
-          name="listing[image]"
+          <div class="mb-3">
+            <label for="title" class="form-label fw-semibold">Title</label>
+            <input
+              type="text"
+              id="title"
+              name="listing[title]"
+              value="<%= listing.title %>"
+              required
+              class="form-control rounded-3"
+            />
+            <div class="valid-feedback">Title looks good!</div>
+            <div class="invalid-feedback">Please enter a valid title.</div>
+          </div>
 
-          class="form-control"
-        />
-        <div class ="valid-feedback"> Image Looks good!</div>
-        <div class ="invalid-feedback"> Please upload a valid image. </div>
+          <div class="mb-3">
+            <label for="description" class="form-label fw-semibold">Description</label>
+            <textarea
+              id="description"
+              name="listing[description]"
+              required
+              rows="4"
+              class="form-control rounded-3"
+            ><%= listing.description %></textarea>
+            <div class="valid-feedback">Description looks good!</div>
+            <div class="invalid-feedback">Please enter a valid description.</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold d-block">Photo</label>
+            <div class="d-flex align-items-center gap-3 flex-wrap mb-2">
+              <img
+                id="imagePreview"
+                src="<%= originalImageUrl %>"
+                alt="Current listing image"
+                class="rounded-3"
+                style="width:96px; height:96px; object-fit:cover; border:1px solid #eee;"
+              />
+              <small class="text-muted" id="imageHelpText">
+                Current photo. Upload a new one below to replace it.
+              </small>
+            </div>
+            <input
+              type="file"
+              id="image"
+              name="listing[image]"
+              accept="image/*"
+              class="form-control rounded-3"
+            />
+            <div class="valid-feedback">Image looks good!</div>
+            <div class="invalid-feedback">Please upload a valid image.</div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-4 mb-3">
+              <label for="price" class="form-label fw-semibold">Price</label>
+              <div class="input-group">
+                <span class="input-group-text">&#8377;</span>
+                <input
+                  type="number"
+                  id="price"
+                  name="listing[price]"
+                  value="<%= listing.price %>"
+                  required
+                  min="0"
+                  class="form-control rounded-3"
+                />
+              </div>
+              <div class="valid-feedback">Price looks good!</div>
+              <div class="invalid-feedback">Please enter a valid price.</div>
+            </div>
+
+            <div class="col-12 col-md-8 mb-3">
+              <label for="country" class="form-label fw-semibold">Country</label>
+              <input
+                type="text"
+                id="country"
+                name="listing[country]"
+                value="<%= listing.country %>"
+                required
+                class="form-control rounded-3"
+              />
+              <div class="valid-feedback">Country looks good!</div>
+              <div class="invalid-feedback">Please enter a valid country.</div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="location" class="form-label fw-semibold">Location</label>
+            <input
+              type="text"
+              id="location"
+              name="listing[location]"
+              value="<%= listing.location %>"
+              required
+              class="form-control rounded-3"
+            />
+            <div class="valid-feedback">Location looks good!</div>
+            <div class="invalid-feedback">Please enter a valid location.</div>
+          </div>
+
+          <div class="d-flex gap-2 flex-wrap">
+            <button
+              type="submit"
+              class="btn rounded-3 px-4"
+              style="background-color:#fe424d; color:#fff;"
+            >
+              <i class="fa-solid fa-check me-1"></i> Update Listing
+            </button>
+            
+              <a href="/listings/<%= listing._id %>"
+              class="btn btn-outline-secondary rounded-3 px-4"
+            >
+              Cancel
+            </a>
+          </div>
+        </form>
       </div>
-      <div class="row">
-        <div class="mb-3 col-md-4">
-          <label for="price" class="form-label">Price</label>
-          <input
-            type="number"
-            name="listing[price]"
-            value="<%= listing.price %>"
-            required
-            class="form-control"
-          />
-          <div class ="valid-feedback"> Price Looks good!</div>
-          <div class ="invalid-feedback"> Please enter a valid price. </div>
-        </div>
-        <div class="mb-3 col-md-8">
-          <label for="country" class="form-label">Country</label>
-          <input
-            name="listing[country]"
-            value="<%= listing.country %>"
-            required
-            class="form-control"
-          />
-          <div class ="valid-feedback"> Country Looks good!</div>
-          <div class ="invalid-feedback"> Please enter a valid country. </div>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="location" class="form-label">Location</label>
-        <input
-          name="listing[location]"
-          value="<%= listing.location %>"
-          required
-          class="form-control"
-        />
-        <div class ="valid-feedback"> Location Looks good!</div>
-        <div class ="invalid-feedback"> Please enter a valid location. </div>
-      </div>
-      <button type="submit" class="btn btn-dark edit-btn mt-3">
-        Update Listing</button
-      ><br /><br />
-      <a href="/listings/<%= listing._id %>" class="btn btn-secondary">Cancel</a>
-    </form>
+
+    </div>
   </div>
 </div>
+
+<script>
+  const imageInput = document.getElementById("image");
+  const imagePreview = document.getElementById("imagePreview");
+  const imageHelpText = document.getElementById("imageHelpText");
+
+  if (imageInput) {
+    imageInput.addEventListener("change", function () {
+      const file = this.files && this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        imagePreview.src = e.target.result;
+        imageHelpText.textContent = "New photo preview — not saved yet.";
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+</script>

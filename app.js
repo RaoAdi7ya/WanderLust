@@ -21,7 +21,7 @@ const reviews = require("./routes/review");
 const users = require("./routes/user");
 
 console.log("DB URL:", process.env.ATLASDB_URL);
-const dbUrl = process.env.ATLASDB_URL;
+const dbUrl = process.env.ATLASDB_URL || "mongodb://localhost:27017/wonderlust";
 
 main()
   .then(() => {
@@ -61,7 +61,7 @@ const sessionConfig = {
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
-  cookies: {
+  cookie: {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     httpOnly: true,
@@ -69,9 +69,6 @@ const sessionConfig = {
 };
 
 
-app.get("/", (req, res) => {
-  res.redirect("/listings");
-});
 
 app.use(session(sessionConfig));
 app.use(flash());
@@ -87,9 +84,13 @@ app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currentUser = req.user;
-  res.locals.process = process;
+  res.locals.mapTilerKey = process.env.MAPTILER_KEY; 
   next();
 });
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
 
 
 
