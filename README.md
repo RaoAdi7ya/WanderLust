@@ -2,7 +2,7 @@
 
 A full-stack property listing and booking platform inspired by Airbnb. Built with Node.js, Express, MongoDB, and EJS.
 
-🔗 **Live Demo:** _Coming soon on Render_
+🔗 **Live Demo:** https://wanderlust-d91d.onrender.com
 
 ---
 
